@@ -4,7 +4,11 @@
 
 To run this bot you must clone this repository and write to ssh
 ```shell
-pip install virtualenv
+git clone https://github.com/MaxBoikov1308/GBTbot.git
+cd GPTbot
+python -m venv ./venv
+cd venv\Scripts
+.\activate
 pip install --upgrade -r .\requirements.txt
-python bot_core.py
 ```
+then run bot_core.py

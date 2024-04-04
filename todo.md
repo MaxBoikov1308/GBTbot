@@ -1,4 +1,4 @@
-[ ] GPT-parser
-[ ] Bot core (python)
-[ ] Bot (Telegram)
-[ ] Server
+- [ ] GPT-parser
+- [ ] Bot core (python)
+- [ ] Bot (Telegram)
+- [ ] Server

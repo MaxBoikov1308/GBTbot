@@ -4,7 +4,7 @@
 
 To run this bot you must clone this repository and write to ssh
 ```shell
-git clone https://github.com/MaxBoikov1308/GBTbot.git
+git clone https://github.com/MaxBoikov1308/GPTbot.git
 cd GPTbot
 python -m venv ./venv
 cd venv\Scripts

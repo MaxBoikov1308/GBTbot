@@ -2,3 +2,4 @@
 - [ ] Bot core (python)
 - [ ] Bot (Telegram)
 - [ ] Server
+- [ ] DB

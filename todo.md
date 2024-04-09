@@ -1,5 +1,18 @@
 - [ ] GPT-parser
+  - [ ] Send request 
+  - [ ] Get response from GPT
+  - [ ] Requests history ?
 - [ ] Bot core (python)
-- [ ] Bot (Telegram)
-- [ ] Server
+  - [x] Buttons
+  - [ ] DB connection 
+  - [ ] GPT connection
+- [x] Bot (Telegram)
+  - [x] Profile
+  - [x] Start message
+  - [x] Buttons
+- [ ] Server?
 - [ ] DB
+  - [ ] Activate orm (sqlalchemy)
+    - [ ] User Telegram ID
+    - [ ] Requests history ?
+    - [ ] Premium subscription ?

@@ -18,3 +18,23 @@ then run run.py
 ```shell
 python run.py
 ```
+
+# To-do list 
+- [ ] GPT-parser
+  - [ ] Send request 
+  - [ ] Get response from GPT
+  - [ ] Requests history ?
+- [ ] Bot core (python)
+  - [x] Buttons
+  - [ ] DB connection 
+  - [ ] GPT connection
+- [x] Bot (Telegram)
+  - [x] Profile
+  - [x] Start message
+  - [x] Buttons
+- [ ] Server?
+- [ ] DB
+  - [ ] Activate orm (sqlalchemy)
+    - [ ] User Telegram ID
+    - [ ] Requests history ?
+    - [ ] Premium subscription ?

@@ -1,6 +1,7 @@
 # ChatGPT bot
+![ChatGPT](https://user-images.githubusercontent.com/7910769/227876683-fc4b9c8c-61da-44d0-8f9a-1397e4f4e904.png)
 
-[Bot id](https://t.me/GPT_YandLms_bot)
+[Bot](https://t.me/GPT_YandLms_bot)
 
 To run this bot you must clone this repository and write to ssh
 ```shell
@@ -23,20 +24,24 @@ python run.py
 - [ ] GPT-parser
   - [ ] Send request 
   - [ ] Get response from GPT
-  - [ ] Requests history ?
-- [ ] Bot core (python)
-  - [x] Buttons
-  - [ ] DB connection 
+- [ ] Bot (python)
+  - [ ] DB connection
+    - [ ] Connect to Register button
   - [ ] GPT connection
-- [x] Bot (Telegram)
-  - [x] Profile
-  - [x] Start message
+    - [x] Get request from user
+    - [ ] Send GPT response
   - [x] Buttons
-  - [x] Help command
-- [ ] Server?
+    - [x] Help
+    - [x] gpt
+- [ ] Bot (Telegram)
+  - [ ] Commands 
+    - [x] Help
+    - [x] Gpt
+    - [ ] Register
+  - [x] Bot logo
+  - [x] Bot profile
+  - [x] Bot start message
 - [ ] DB
-  - [ ] Activate orm (sqlalchemy)
-    - [ ] Premium subscription ?
-    - [ ] Registration
-      - [ ] Email
-      - [ ] Password
+  - [ ] Registration
+  - [ ] Email
+  - [ ] Password

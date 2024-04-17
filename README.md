@@ -15,10 +15,7 @@ then open GPTbot and write to ssh
 ```shell
 pip install --upgrade -r .\requirements.txt
 ```
-then run run.py
-```shell
-python run.py
-```
+
 
 # To-do list 
 - [ ] GPT-parser
@@ -26,7 +23,7 @@ python run.py
   - [ ] Get response from GPT
 - [ ] Bot (python)
   - [ ] DB connection
-    - [ ] Connect to Register button
+    - [x] Connect to Register button
   - [ ] GPT connection
     - [x] Get request from user
     - [ ] Send GPT response

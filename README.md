@@ -32,9 +32,11 @@ python run.py
   - [x] Profile
   - [x] Start message
   - [x] Buttons
+  - [x] Help command
 - [ ] Server?
 - [ ] DB
   - [ ] Activate orm (sqlalchemy)
-    - [ ] User Telegram ID
-    - [ ] Requests history ?
     - [ ] Premium subscription ?
+    - [ ] Registration
+      - [ ] Email
+      - [ ] Password

@@ -21,7 +21,7 @@ tg_bot = TelegramBot("...")
 
 
 # To-do list 
-- [ ] Flask app
+- [ ] App
   - [ ] Send request to GPT
   - [ ] Get response from GPT
   - [ ] Send response to bot
@@ -33,7 +33,7 @@ tg_bot = TelegramBot("...")
     - [ ] Send data to db
   - [ ] GPT
     - [ ] Get request from user
-    - [ ] Send request to Flask app
+    - [ ] Send request to app
     - [ ] Get response from app
     - [ ] Send response to user
 - [x] Bot (Telegram)

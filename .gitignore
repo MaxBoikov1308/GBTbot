@@ -2,3 +2,4 @@ venv
 README.md
 todo.md
 users.db-journal
+__pycache__

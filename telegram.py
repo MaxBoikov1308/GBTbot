@@ -8,13 +8,14 @@ versions = ["GPT4", "GPT3.5"]
 
 class TelegramBot:
 
-    def commands_keyboard(self, commands: list, versions: list, ischoose: bool = False) -> types.InlineKeyboardMarkup:
+    def commands_keyboard(self, commands: list, versions: list, ischoose: bool = False, isgpt: bool = False) -> types.InlineKeyboardMarkup:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         
         if ischoose:
             for version in versions:
                 markup.add(types.KeyboardButton(version))
-        
+        elif isgpt:
+            markup.add(types.KeyboardButton('/exit'))
         else:
             for command in commands:
                 markup.add(types.KeyboardButton(command))
@@ -37,7 +38,7 @@ class TelegramBot:
                                             f"@GPT_YandLms_bot", reply_markup=self.commands_keyboard(commands, versions))
 
         @self.bot.message_handler(commands=['help'])
-        def help(message) -> None:
+        def help_message(message) -> None:
             self.bot.send_message(message.chat.id, f"The following commands are available:\n\n"
                                             f"/help - show availible commands\n"
                                             f"/reg - register\n"
@@ -53,10 +54,15 @@ class TelegramBot:
         def choose_version(message):
             try:
                 version = message.text  # give version to app
+                if version not in versions:
+                    self.bot.send_message(message.chat.id, "Choose correct version",
+                                        reply_markup=self.commands_keyboard(commands, versions, True))
+                    self.bot.register_next_step_handler(message, choose_version)
+                    return
                 self.bot.reply_to(message, "you choose: " + version,
                                     reply_markup=self.commands_keyboard(commands, versions))
                 self.bot.send_message(message.chat.id, "Enter your request: ",
-                                        reply_markup=self.commands_keyboard(commands, versions))
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 self.bot.register_next_step_handler(message, gpt_request)
             
             except Exception as ex:
@@ -65,12 +71,16 @@ class TelegramBot:
         def gpt_request(message):
             try:
                 request = message.text  # give request to app
+                if request == "/exit":
+                    self.bot.send_message(message.chat.id, "You left from GPT",
+                                        reply_markup=self.commands_keyboard(commands, versions))
+                    return
                 
                 # gpt response will be here (get response from app)
 
                 self.bot.reply_to(message, request)
                 self.bot.send_message(message.chat.id, "Enter your request: ",
-                                        reply_markup=self.commands_keyboard(commands, versions))
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 self.bot.register_next_step_handler(message, gpt_request)
             
             except Exception as ex:

@@ -22,18 +22,17 @@ tg_bot = TelegramBot("...")
 
 # To-do list 
 - [ ] App
-  - [ ] Send request to GPT
+  - [X] Send request to GPT
   - [ ] Get response from GPT
   - [ ] Send response to bot
 - [ ] Bot (python)
   - [x] Start
   - [x] Help
   - [ ] Register
-    - [ ] Get user data
-    - [ ] Send data to db
+  - [ ] Delete account
   - [ ] GPT
-    - [ ] Get request from user
-    - [ ] Send request to app
+    - [x] Get request from user
+    - [x] Send request to app
     - [ ] Get response from app
     - [ ] Send response to user
 - [x] Bot (Telegram)

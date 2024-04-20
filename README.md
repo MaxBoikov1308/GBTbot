@@ -8,8 +8,6 @@ To run this bot you must clone this repository and write to ssh
 git clone https://github.com/MaxBoikov1308/GPTbot.git
 cd GPTbot
 python -m venv ./venv
-cd venv\Scripts
-.\activate
 ```
 then open GPTbot and write to ssh
 ```shell
@@ -17,8 +15,8 @@ pip install --upgrade -r .\requirements.txt
 ```
 
 And enter bot token to
-```shell
-tg_bot = TelegramBot("")
+```python
+tg_bot = TelegramBot("...")
 ```
 
 

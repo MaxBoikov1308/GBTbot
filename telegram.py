@@ -64,7 +64,6 @@ class TelegramBot:
                 self.bot.send_message(message.chat.id, "Enter your request: ",
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 self.bot.register_next_step_handler(message, gpt_request)
-            
             except Exception as ex:
                 print(repr(ex))
         
@@ -82,10 +81,56 @@ class TelegramBot:
                 self.bot.send_message(message.chat.id, "Enter your request: ",
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 self.bot.register_next_step_handler(message, gpt_request)
-            
             except Exception as ex:
                 print(repr(ex))
+        
+        @self.bot.message_handler(commands=['reg'])
+        def register(message):
+            try:
+                username = message.from_user.id
+                self.bot.send_message(message.chat.id, "Enter your email: ",
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                self.bot.register_next_step_handler(message, email_input, username=username)
+            except Exception as ex:
+                print(repr(ex))
+        
+        def email_input(message, username=None):
+            try:
+                email = message.text
 
+                if email == "/exit":
+                    self.bot.send_message(message.chat.id, "You cancelled registration",
+                                          reply_markup=self.commands_keyboard(commands, versions))
+                    return
+                
+                if "@" not in email:
+                    self.bot.send_message(message.chat.id, "Email must contain @. Enter your email: ",
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                    self.bot.register_next_step_handler(message, email_input, username=username)
+                    return
+                
+                self.bot.send_message(message.chat.id, "Enter your password: ",
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                self.bot.register_next_step_handler(message, password_input, username=username, email=email)
+            except Exception as ex:
+                print(repr(ex))
+        
+        def password_input(message, username=None, email=None):
+            try:
+                password = message.text
+
+                if password == "/exit":
+                    self.bot.send_message(message.chat.id, "You cancelled registration",
+                                          reply_markup=self.commands_keyboard(commands, versions))
+                    return
+
+                self.bot.send_message(message.chat.id, f"You registered successfully\n"
+                                      f"Username: {username}\n"
+                                      f"Email: {email}\n"
+                                      f"Password: {password}",
+                                        reply_markup=self.commands_keyboard(commands, versions))
+            except Exception as ex:
+                print(repr(ex))
 
     def start_polling(self, none_stop: bool = True):
         self.bot.polling(none_stop=none_stop)

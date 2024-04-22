@@ -41,5 +41,5 @@ tg_bot = TelegramBot("...")
   - [x] Bot profile
   - [x] Bot start message
 - [ ] Database
-  - [ ] Create models
+  - [x] Create models
   - [ ] Connect to bot and app

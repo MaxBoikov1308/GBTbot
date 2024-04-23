@@ -71,17 +71,18 @@ class TelegramBot:
             try:
                 self.bot.send_chat_action(message.chat.id, 'typing')
                 request = message.text
-                if self.gpt.generation(request, version) == False:
+                response = self.gpt.generation(request, version)
+                if response == False:
                     self.bot.send_message(message.chat.id, "You left from GPT",
                                         reply_markup=self.commands_keyboard(commands, versions))
                     return
-                
-                self.bot.send_message(message.chat.id, self.gpt.generation(request, version),
-                                      reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
-                
-                self.bot.send_message(message.chat.id, "Enter your request: ",
+                else:
+                    self.bot.send_message(message.chat.id, response,
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
-                self.bot.register_next_step_handler(message, gpt_request)
+                    
+                    self.bot.send_message(message.chat.id, "Enter your request: ",
+                                            reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                    self.bot.register_next_step_handler(message, gpt_request)
             except Exception as ex:
                 print(repr(ex))
         

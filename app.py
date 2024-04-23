@@ -1,6 +1,15 @@
-from flask import Flask, request, send_from_directory
+import g4f
 
-app = Flask(__name__)
+class GPT:
+    def __init__(self, prompt, model):
+        self.prompt = prompt
+        self.model = model
 
-# if __name__ == '__main__':
-    # app.run("0.0.0.0", port=8080)
+
+    def generation(prompt, model):    
+        respose = g4f.ChatCompletion.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+        ) 
+        return respose
+        

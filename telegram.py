@@ -1,9 +1,10 @@
 from telebot import TeleBot, types
 # from database.dbapi import DatabaseConnector
+import app
 
 
 commands = ["/help", "/reg", "/gpt"]
-versions = ["GPT4", "GPT3.5"]
+versions = ["gpt-3.5-turbo", "gpt-4"]
 
 
 class TelegramBot:
@@ -67,6 +68,7 @@ class TelegramBot:
                 request = message.text  # give request to app
                 
                 # gpt response will be here (get response from app)
+                
 
                 self.bot.reply_to(message, request)
                 self.bot.send_message(message.chat.id, "Enter your request: ",

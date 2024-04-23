@@ -1,6 +1,6 @@
 from telebot import TeleBot, types
 # from database.dbapi import DatabaseConnector
-import app
+from app import GPT
 
 
 commands = ["/help", "/reg", "/gpt"]
@@ -9,7 +9,7 @@ versions = ["gpt-3.5-turbo", "gpt-4"]
 
 class TelegramBot:
 
-    def commands_keyboard(self, commands: list, versions: list, ischoose: bool = False, isgpt: bool = False) -> types.InlineKeyboardMarkup:
+    def commands_keyboard(self, commands: list, versions: list, ischoose: bool = False, isgpt: bool = False, isreg: bool = False) -> types.InlineKeyboardMarkup:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         
         if ischoose:
@@ -26,6 +26,7 @@ class TelegramBot:
     def __init__(self, api_token: str) -> None:
         self.bot = TeleBot(api_token)
         self.handlers()
+        self.gpt = GPT()
     
     def handlers(self):
         
@@ -34,7 +35,6 @@ class TelegramBot:
             self.bot.send_message(message.chat.id, f"Welcome to the chatgpt_bot, @{message.from_user.username}.\n"
                                             f"The following commands are available:\n\n"
                                             f"/help - show availible commands\n"
-                                            f"/reg - register\n"
                                             f"/gpt - run gpt\n\n"
                                             f"@GPT_YandLms_bot", reply_markup=self.commands_keyboard(commands, versions))
 
@@ -42,7 +42,6 @@ class TelegramBot:
         def help_message(message) -> None:
             self.bot.send_message(message.chat.id, f"The following commands are available:\n\n"
                                             f"/help - show availible commands\n"
-                                            f"/reg - register\n"
                                             f"/gpt - run gpt\n\n"
                                             f"@GPT_YandLms_bot", reply_markup=self.commands_keyboard(commands, versions))
         
@@ -54,7 +53,7 @@ class TelegramBot:
         
         def choose_version(message):
             try:
-                version = message.text  # give version to app
+                version = message.text
                 if version not in versions:
                     self.bot.send_message(message.chat.id, "Choose correct version",
                                         reply_markup=self.commands_keyboard(commands, versions, True))
@@ -64,22 +63,22 @@ class TelegramBot:
                                     reply_markup=self.commands_keyboard(commands, versions))
                 self.bot.send_message(message.chat.id, "Enter your request: ",
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
-                self.bot.register_next_step_handler(message, gpt_request)
+                self.bot.register_next_step_handler(message, gpt_request, version=version)
             except Exception as ex:
                 print(repr(ex))
         
-        def gpt_request(message):
+        def gpt_request(message, version="gpt-3.5-turbo"):
             try:
-                request = message.text  # give request to app
-                if request == "/exit":
+                self.bot.send_chat_action(message.chat.id, 'typing')
+                request = message.text
+                if self.gpt.generation(request, version) == False:
                     self.bot.send_message(message.chat.id, "You left from GPT",
                                         reply_markup=self.commands_keyboard(commands, versions))
                     return
                 
-                # gpt response will be here (get response from app)
+                self.bot.send_message(message.chat.id, self.gpt.generation(request, version),
+                                      reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 
-
-                self.bot.reply_to(message, request)
                 self.bot.send_message(message.chat.id, "Enter your request: ",
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                 self.bot.register_next_step_handler(message, gpt_request)

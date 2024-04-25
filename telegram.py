@@ -91,13 +91,17 @@ class TelegramBot:
                     return
                 else:
                     self.bot.send_message(message.chat.id, response,
-                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True), parse_mode="markdown")
                     
                     self.bot.send_message(message.chat.id, f"{self.interface.phrases('Enter your request', self.lang)}: ",
                                             reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
                     self.bot.register_next_step_handler(message, gpt_request)
             except Exception as ex:
+                self.bot.send_message(message.chat.id, f"{self.interface.phrases('Something went wrong', self.lang)}")
+                self.bot.register_next_step_handler(message, select_language)
                 print(repr(ex))
+
+            return
         
         @self.bot.message_handler(commands=['reg'])
         def register(message):

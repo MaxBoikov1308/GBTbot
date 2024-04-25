@@ -103,3 +103,8 @@ class Interface:
                 return text
             elif lang == "🇷🇺Русский":
                 return "Пароль"
+        if text == "Something went wrong":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Что-то пошло не так"

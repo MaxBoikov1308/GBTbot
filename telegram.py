@@ -1,6 +1,6 @@
 from telebot import TeleBot, types
 # from database.dbapi import DatabaseConnector
-from app import GPT
+from gpt import GPT
 from interface import Interface
 
 

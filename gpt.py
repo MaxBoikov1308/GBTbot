@@ -6,7 +6,6 @@ class GPT:
         pass
 
     def generation(self, prompt, model):   
-        print(prompt) 
         if prompt == "/exit":
             return False
         respose = g4f.ChatCompletion.create(

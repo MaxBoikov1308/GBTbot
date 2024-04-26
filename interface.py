@@ -48,11 +48,11 @@ class Interface:
                 return text
             elif lang == "🇷🇺Русский":
                 return "Введите ваш пароль"
-        if text == "Email must contain @. Enter your email":
+        if text == "Email must contain one @ and one point. Enter your email":
             if lang == "🇬🇧English":
                 return text
             elif lang == "🇷🇺Русский":
-                return "Email должен содержать @. Введите ваш email"
+                return "Email должен содержать @ и точку. Введите ваш email"
         if text == "Enter your username":
             if lang == "🇬🇧English":
                 return text
@@ -108,3 +108,33 @@ class Interface:
                 return text
             elif lang == "🇷🇺Русский":
                 return "Что-то пошло не так"
+        if text == "You are already registered":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Вы уже зарегистрированы"
+        if text == "You must register":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Вы должны зарегистрироваться"
+        if text == "/delete - delete account":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "/delete - удалить аккаунт"
+        if text == "/clear - clear history":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "/clear - очистить историю"
+        if text == "Your account has been deleted":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Ваш аккаунт был удален"
+        if text == "Your history has been cleared":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Ваша история была очищена"

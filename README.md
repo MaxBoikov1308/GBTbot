@@ -19,24 +19,29 @@ And enter bot token to
 tg_bot = TelegramBot("...")
 ```
 
+##Or use init.bat
 
-## To-do list 
-- [ ] Bot (python)
+
+# To-do list 
+- [x] Bot
   - [x] Start
+  - [x] Language selection
+    - [x] English
+    - [x] Russian
+  - [x] Delete account
   - [x] Help
-  - [ ] Register
-  - [ ] Delete account
+  - [x] Register
   - [x] GPT
-    - [x] Get request from user
-    - [x] Send request to app
-    - [x] Get response from app
+    - [X] Send request to GPT
+    - [x] Get response from GPT
     - [x] Send response to user
-    - [ ] Streaming output(maybe)
-- [x] Bot (Telegram)
-  - [x] Commands 
-  - [x] Bot logo
-  - [x] Bot profile
-  - [x] Bot start message
-- [ ] Database
-  - [x] Create models
-  - [ ] Connect to bot and app
+      - [x] Formating
+      - [ ] Stream ?
+      - [x] History (local)
+- [x] Database
+  - [x] Models
+    - [x] Users
+    - [x] Requests history (all users)
+  - [x] SQLAlchemy initialisation
+- [x] initialisation
+  - [x] Threading

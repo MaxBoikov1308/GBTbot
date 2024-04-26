@@ -8,6 +8,5 @@ class GPT:
     def generation(self, prompt, model):   
         response = g4f.ChatCompletion.create(
             model=model,
-            messages=prompt,
-            provider="Aichatos",)
+            messages=prompt,)
         return response

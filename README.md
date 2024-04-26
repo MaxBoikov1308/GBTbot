@@ -21,24 +21,24 @@ tg_bot = TelegramBot("...")
 
 
 # To-do list 
-- [x] App
-  - [X] Send request to GPT
-  - [x] Get response from GPT
-  - [x] Send response to bot
-- [ ] Bot (python)
+- [x] Bot
   - [x] Start
+  - [x] Language selection
+    - [x] English
+    - [x] Russian
+  - [x] Delete account
   - [x] Help
-  - [ ] Register
+  - [x] Register
   - [x] GPT
-    - [x] Get request from user
-    - [x] Send request to app
-    - [x] Get response from app
+    - [X] Send request to GPT
+    - [x] Get response from GPT
     - [x] Send response to user
-- [x] Bot (Telegram)
-  - [x] Commands 
-  - [x] Bot logo
-  - [x] Bot profile
-  - [x] Bot start message
-- [ ] Database
-  - [x] Create models
-  - [ ] Connect to bot and app
+      - [x] Formating
+      - [ ] Stream ?
+- [x] Database
+  - [x] Models
+    - [x] Users
+    - [x] Requests
+  - [x] SQLAlchemy initialisation
+- [x] initialisation
+  - [x] Threading

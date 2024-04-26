@@ -35,10 +35,11 @@ tg_bot = TelegramBot("...")
     - [x] Send response to user
       - [x] Formating
       - [ ] Stream ?
+      - [x] History (local)
 - [x] Database
   - [x] Models
     - [x] Users
-    - [x] Requests
+    - [x] Requests history (all users)
   - [x] SQLAlchemy initialisation
 - [x] initialisation
   - [x] Threading

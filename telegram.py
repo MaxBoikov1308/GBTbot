@@ -37,6 +37,7 @@ class TelegramBot:
         self.lang = "🇬🇧English"
         self.interface = Interface()
         self.userid = None
+        self.history = []
     
     def start_polling(self, none_stop: bool = True):
         self.bot.polling(none_stop=none_stop)
@@ -85,7 +86,7 @@ class TelegramBot:
         
         def choose_version(message):
             try:
-                version = message.text
+                version = message.text  # gpt4 isn't available, because providers aren't working
                 self.userid = message.from_user.id
 
                 if version not in versions:
@@ -97,7 +98,7 @@ class TelegramBot:
                                     reply_markup=self.commands_keyboard(commands, versions))
                 self.bot.send_message(message.chat.id, f"{self.interface.phrases('Enter your request', self.lang)}: ",
                                         reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
-                self.bot.register_next_step_handler(message, gpt_request, version=version)
+                self.bot.register_next_step_handler(message, gpt_request)
 
             except Exception as ex:
                 print(repr(ex))
@@ -107,20 +108,26 @@ class TelegramBot:
                 self.bot.send_chat_action(message.chat.id, 'typing')
                 self.userid = message.from_user.id
                 request = message.text
-                print(self.userid, request)
-                response = self.gpt.generation(request, version)
 
-                if response == False:
+                if request == "/exit":
                     self.bot.send_message(message.chat.id, f"{self.interface.phrases('You left from GPT', self.lang)}",
                                         reply_markup=self.commands_keyboard(commands, versions))
                     return
                 else:
-                    if not self.save_request(username=self.userid, request=request):
-                        print("whoops")
+                    self.save_request(username=self.userid, request=request)
+                    self.add_to_history(request)
+                    response = self.gpt.generation(self.history, version)
+                    self.add_to_history(response, isgpt=True)
+                    print(self.userid, request)
                     
                     self.bot.send_chat_action(message.chat.id, 'typing')
-                    self.bot.send_message(message.chat.id, response,
-                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True), parse_mode="markdown")
+                    try:
+                        self.bot.send_message(message.chat.id, response,
+                                            reply_markup=self.commands_keyboard(commands, versions, isgpt=True), parse_mode="markdown")
+                    except Exception as ex:
+                        self.bot.send_message(message.chat.id, response,
+                                            reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                        print(repr(ex))
                     
                     self.bot.send_message(message.chat.id, f"{self.interface.phrases('Enter your request', self.lang)}: ",
                                             reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
@@ -128,7 +135,7 @@ class TelegramBot:
 
             except Exception as ex:
                 self.bot.send_message(message.chat.id, f"{self.interface.phrases('Something went wrong', self.lang)}")
-                self.bot.register_next_step_handler(message, select_language)
+                self.bot.register_next_step_handler(message, gpt_request, version=version)
                 print(repr(ex))
 
             return
@@ -219,6 +226,7 @@ class TelegramBot:
         @self.bot.message_handler(commands=['clear'])
         def clear_history(message):
             try:
+                self.history = []
                 dbapi.global_init("data/data.db")
                 db_sess = dbapi.create_session()
                 db_sess.query(Requests).filter(Requests.username == self.userid).delete()
@@ -271,6 +279,16 @@ class TelegramBot:
             db_sess.commit()
             return True
         
+        except Exception as ex:
+            print(repr(ex))
+    
+    def add_to_history(self, text, isgpt=False):
+        try:
+            if isgpt:
+                self.history.append({"role": "assistant", "content": text})
+            self.history.append({"role": "user", "content": text})
+            if len(self.history) >= 20:
+                self.history.pop(0)
         except Exception as ex:
             print(repr(ex))
 

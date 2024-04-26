@@ -7,11 +7,12 @@ from data.models import Users, Requests
 
 commands = ["/help", "/gpt"]
 versions = ["gpt-3.5-turbo", "gpt-4"]
+support = ["ton", "rub;kzt;usd"]
 
 
 class TelegramBot:
 
-    def commands_keyboard(self, commands: list, versions: list, ischoose: bool = False, isgpt: bool = False, isreg: bool = False, islang: bool = False) -> types.InlineKeyboardMarkup:
+    def commands_keyboard(self, commands, versions, ischoose=False, isgpt=False, isreg=False, islang=False, issupport=False):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         
         if ischoose:
@@ -24,9 +25,13 @@ class TelegramBot:
             markup.add(types.KeyboardButton('🇬🇧English'))
         elif isreg:
             markup.add(types.KeyboardButton('/reg'))
+        elif issupport:
+            for s in support:
+                markup.add(types.KeyboardButton(s))
         else:
             for command in commands:
                 markup.add(types.KeyboardButton(command))
+            markup.add(types.KeyboardButton('/support'))
 
         return markup
 
@@ -66,6 +71,7 @@ class TelegramBot:
                                             f"{self.interface.phrases('/gpt - run gpt', self.lang)}\n\n"
                                             f"{self.interface.phrases('/delete - delete account', self.lang)}\n\n"
                                             f"{self.interface.phrases('/clear - clear history', self.lang)}\n\n"
+                                            f"{self.interface.phrases('/support - support developers', self.lang)}\n\n"
                                             f"@GPT_YandLms_bot", reply_markup=self.commands_keyboard(commands, versions))
 
         @self.bot.message_handler(commands=['help'])
@@ -76,6 +82,7 @@ class TelegramBot:
                                             f"{self.interface.phrases('/gpt - run gpt', self.lang)}\n\n"
                                             f"{self.interface.phrases('/delete - delete account', self.lang)}\n\n"
                                             f"{self.interface.phrases('/clear - clear history', self.lang)}\n\n"
+                                            f"{self.interface.phrases('/support - support developers', self.lang)}\n\n"
                                             f"@GPT_YandLms_bot", reply_markup=self.commands_keyboard(commands, versions))
         
         @self.bot.message_handler(commands=['gpt'])
@@ -239,6 +246,41 @@ class TelegramBot:
 
             except Exception as ex:
                 print(repr(ex))
+        
+        @self.bot.message_handler(commands=['support'])
+        def support_input(message):
+            try:
+                self.bot.send_message(message.chat.id, f"{self.interface.phrases('Choose option', self.lang)}: ",
+                                        reply_markup=self.commands_keyboard(commands, versions, issupport=True))
+                self.bot.register_next_step_handler(message, payment)
+            except Exception as ex:
+                print(repr(ex))
+        
+        def payment(message):
+            try:
+                text = message.text
+                if text not in support:
+                    self.bot.send_message(message.chat.id, f"{self.interface.phrases('Choose option', self.lang)}: ",
+                                        reply_markup=self.commands_keyboard(commands, versions, issupport=True))
+                    self.bot.register_next_step_handler(message, payment)
+                    return
+                if text == "/exit":
+                    self.bot.send_message(message.chat.id, f"{self.interface.phrases('You cancelled support', self.lang)}",
+                                          reply_markup=self.commands_keyboard(commands, versions))
+                    self.bot.register_next_step_handler(message, select_language)
+                    return
+                if text == "ton":
+                    self.bot.send_message(message.chat.id, f"UQBorPauc1_h96p4OkYCsMYlf6UgtP93dbVAJlvEWI7gK8Wu",
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                    self.bot.register_next_step_handler(message, select_language)
+                    return
+                if text == "rub;kzt;usd":
+                    self.bot.send_message(message.chat.id, f"2200700979288320",
+                                        reply_markup=self.commands_keyboard(commands, versions, isgpt=True))
+                    self.bot.register_next_step_handler(message, select_language)
+                    return
+            except Exception as ex:
+                print(repr(ex))
     
     def register(self, username, email, password):
         try:
@@ -294,5 +336,5 @@ class TelegramBot:
 
 
 def main() -> None:
-    tg_bot = TelegramBot("7166707397:AAGVYvapB_wbBc2jcNt44Qb59xaf5JYDiHw")
+    tg_bot = TelegramBot(...)
     tg_bot.start_polling()

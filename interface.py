@@ -138,3 +138,18 @@ class Interface:
                 return text
             elif lang == "🇷🇺Русский":
                 return "Ваша история была очищена"
+        if text == "Choose option":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Выберите вариант"
+        if text == "You cancelled support":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "Вы отменили поддержку"
+        if text == "/support - support developers":
+            if lang == "🇬🇧English":
+                return text
+            elif lang == "🇷🇺Русский":
+                return "/support - поддержка разработчиков"

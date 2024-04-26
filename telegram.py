@@ -3,6 +3,7 @@ from gpt import GPT
 from interface import Interface
 from data import dbapi
 from data.models import Users, Requests
+from get_api_key import get_api_key
 
 
 commands = ["/help", "/gpt"]
@@ -336,5 +337,5 @@ class TelegramBot:
 
 
 def main() -> None:
-    tg_bot = TelegramBot(...)
+    tg_bot = TelegramBot(get_api_key())
     tg_bot.start_polling()

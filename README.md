@@ -19,6 +19,8 @@ And enter bot token to
 tg_bot = TelegramBot("...")
 ```
 
+##Or use init.bat
+
 
 # To-do list 
 - [x] Bot

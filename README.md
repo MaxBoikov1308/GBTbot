@@ -3,6 +3,8 @@
 
 [Bot](https://t.me/GPT_YandLms_bot)
 
+Latest working version is on "main" branch
+
 To run this bot you must clone this repository and write to ssh
 ```shell
 git clone https://github.com/MaxBoikov1308/GPTbot.git
@@ -19,7 +21,7 @@ And enter bot token to
 tg_bot = TelegramBot("...")
 ```
 
-##Or use init.bat
+#Or use init.bat
 
 
 # To-do list 
